@@ -4,6 +4,7 @@ import numpy as np
 from skimage import data
 from skimage.viewer import ImageViewer
 from skimage.feature import canny
+from skimage.filters import sobel
 from skimage import morphology
 from scipy import ndimage as ndi
 
@@ -53,7 +54,29 @@ no_small.imshow(coins_cleaned, cmap=plt.cm.gray, interpolation='nearest')
 no_small.set_title('removing small objects')
 no_small.axis('off')
 
+#region based segmentation
+
+elevation_map = sobel(coins)
+
+fig, axes4 = plt.subplots(figsize=(4, 3))
+axes4.imshow(elevation_map, cmap=plt.cm.gray, interpolation='nearest')
+axes4.set_title('elevation map')
+axes4.axis('off')
+
+#using region segmentation to define markers of background and object
+
+markers = np.zeros_like(coins)
+markers[coins < 30] = 1
+markers[coins > 150] = 2
+
+fig, axes5 = plt.subplots(figsize=(4, 3))
+axes5.imshow(markers, cmap=plt.cm.nipy_spectral, interpolation='nearest')
+axes5.set_title('markers')
+axes5.axis('off')
+
 plt.show()
+
+
 
 #viewer = ImageViewer(coins)
 #viewer.show()
