@@ -5,6 +5,8 @@ from skimage import data
 from skimage.viewer import ImageViewer
 from skimage.feature import canny
 from skimage.filters import sobel
+from skimage.morphology import watershed
+from skimage.color import label2rgb
 from skimage import morphology
 from scipy import ndimage as ndi
 
@@ -73,6 +75,30 @@ fig, axes5 = plt.subplots(figsize=(4, 3))
 axes5.imshow(markers, cmap=plt.cm.nipy_spectral, interpolation='nearest')
 axes5.set_title('markers')
 axes5.axis('off')
+
+#use watershed transform to fill regions of elevation map, starting with defined markers
+
+segmentation = morphology.watershed(elevation_map, markers)
+
+fig, axes6 = plt.subplots(figsize=(4, 3))
+axes6.imshow(segmentation, cmap=plt.cm.gray, interpolation='nearest')
+axes6.set_title('segmentation')
+axes6.axis('off')
+
+#individually labeled coins, as well as filling small holes
+
+segmentation = ndi.binary_fill_holes(segmentation - 1)
+labeled_coins, _ = ndi.label(segmentation)
+image_label_overlay = label2rgb(labeled_coins, image=coins)
+
+fig, axes7 = plt.subplots(1, 2, figsize=(8, 3), sharey=True)
+axes7[0].imshow(coins, cmap=plt.cm.gray, interpolation='nearest')
+axes7[0].contour(segmentation, [0.5], linewidths=1.2, colors='y')
+axes7[1].imshow(image_label_overlay, interpolation='nearest')
+for a in axes7:
+    a.axis('off')
+
+plt.tight_layout()
 
 plt.show()
 
