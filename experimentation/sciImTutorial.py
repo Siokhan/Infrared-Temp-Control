@@ -10,7 +10,7 @@ from skimage.color import label2rgb
 from skimage import morphology
 from scipy import ndimage as ndi
 
-coins = data.coins()
+coins = open('atlantis.png')
 histo = np.histogram(coins, bins=np.arange(0,256))
 
 fig, axes = plt.subplots(1, 2, figsize=(8, 3))
