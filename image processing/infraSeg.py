@@ -50,16 +50,26 @@ ax_each.set_title("Sobel filter computed\n on individual RGB channels")
 
 ax_hsv.imshow(rescale_intensity(1 - sobel_hsv(atlantis)))
 ax_hsv.set_xticks([]), ax_hsv.set_yticks([])
-ax_hsv.set_title("Sobel filter computed\n on (V)alue converted image (HSV)")
+ax_hsv.set_title("Sobel filter computed\n on Value converted image (HSV)")
 
 #attempting to detect human body using color deconvolution
 
 cmap_custom = LinearSegmentedColormap.from_list('mycmap', ['white', 'green'])
 atlantis_hed = rgb2hed(atlantis)
 
+finalSeg = atlantis_hed[:, :, 0]
+finalSeg = finalSeg / 255
+
 fig, custom_color = plt.subplots(figsize=(4, 3))
-custom_color.imshow(atlantis_hed[:, :, 0], cmap=cmap_custom)
+custom_color.imshow(finalSeg, cmap=cmap_custom)
 custom_color.set_title('color separation')
 custom_color.axis('off')
+
+
+#f = open("humanSeperation.png", "w+")
+io.imsave("humanSeperation.png", finalSeg)
+#f.close()
+
+
 
 plt.show()
