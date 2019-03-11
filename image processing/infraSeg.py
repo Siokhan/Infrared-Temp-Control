@@ -5,6 +5,7 @@ from skimage import data
 from skimage import io
 from skimage import filters
 from skimage import morphology
+from skimage import img_as_uint
 from skimage.viewer import ImageViewer
 from skimage.feature import canny
 from skimage.filters import sobel
@@ -67,9 +68,7 @@ custom_color.axis('off')
 
 
 #f = open("humanSeperation.png", "w+")
-io.imsave("humanSeperation.png", finalSeg)
+io.imsave("./images/humanSeperation.png", finalSeg)
 #f.close()
 
-
-
-plt.show()
+#plt.show()
