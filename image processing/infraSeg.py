@@ -32,34 +32,12 @@ atlantisThresh.imshow(atlantis)
 atlantisThresh.set_title('image')
 atlantisThresh.axis('off')
 
-#applying grayscale filter to rgb picture
-
-@adapt_rgb(each_channel)
-def sobel_each(atlantis):
-    return filters.sobel(atlantis)
-
-
-@adapt_rgb(hsv_value)
-def sobel_hsv(atlantis):
-    return filters.sobel(atlantis)
-
-fig, (ax_each, ax_hsv) = plt.subplots(ncols=2, figsize=(11, 5))
-
-ax_each.imshow(rescale_intensity(1 - sobel_each(atlantis)))
-ax_each.set_xticks([]), ax_each.set_yticks([])
-ax_each.set_title("Sobel filter computed\n on individual RGB channels")
-
-ax_hsv.imshow(rescale_intensity(1 - sobel_hsv(atlantis)))
-ax_hsv.set_xticks([]), ax_hsv.set_yticks([])
-ax_hsv.set_title("Sobel filter computed\n on Value converted image (HSV)")
-
 #attempting to detect human body using color deconvolution
 
 cmap_custom = LinearSegmentedColormap.from_list('mycmap', ['white', 'green'])
 atlantis_hed = rgb2hed(atlantis)
 
 finalSeg = atlantis_hed[:, :, 0]
-finalSeg = finalSeg / 255
 
 fig, custom_color = plt.subplots(figsize=(4, 3))
 custom_color.imshow(finalSeg, cmap=cmap_custom)
@@ -68,7 +46,7 @@ custom_color.axis('off')
 
 
 #f = open("humanSeperation.png", "w+")
-io.imsave("./images/humanSeperation.png", finalSeg)
+#io.imsave("./images/humanSeperation.png", finalSeg)
 #f.close()
 
-#plt.show()
+plt.show()
