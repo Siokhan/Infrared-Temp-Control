@@ -1,11 +1,15 @@
 import matplotlib.pyplot as plt
 
 from skimage import io
+from skimage import img_as_float
+from skimage import img_as_ubyte
+from skimage import img_as_uint
+from skimage import img_as_int
 from skimage.color import rgb2hed
 from matplotlib.colors import LinearSegmentedColormap
 
 #Seperating human from the rest of the image using IHC colour deconvolution
-
+#This function accomplishes what is described above on specified image
 def color_seperation(image_path, colour1, colour2):
     image = io.imread(image_path)
     image_hed = rgb2hed(image)
@@ -17,10 +21,12 @@ def color_seperation(image_path, colour1, colour2):
     human_seperation.imshow(final_seg, cmap=cmap_custom)
     human_seperation.set_title('colour deconvolution')
     human_seperation.axis('off')
+    #save_final_seg = final_seg / 255
+    io.imsave('./images/' + image_path[9:17] + '_seg.jpg', img_as_uint(final_seg))
 
     return human_seperation
 
-color_seperation('./images/atlantis.jpg', 'white', 'green')
+atlantis_seg = color_seperation('./images/atlantis.jpg', 'white', 'green')
 
 plt.show()
 
