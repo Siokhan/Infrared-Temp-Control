@@ -21,10 +21,13 @@ def color_seperation(image_path, colour1, colour2):
     human_seperation.imshow(final_seg, cmap=cmap_custom)
     human_seperation.set_title('colour deconvolution')
     human_seperation.axis('off')
-    #save_final_seg = final_seg / 255
-    io.imsave('./images/' + image_path[9:17] + '_seg.jpg', img_as_uint(final_seg))
+
+    #attempt at saving the image onto machine, not crucial
+    #having issues, come back to this at the end
+    #io.imsave('./images/' + image_path[9:17] + '_seg.jpg', final_seg)
 
     return human_seperation
+    return final_seg
 
 atlantis_seg = color_seperation('./images/atlantis.jpg', 'white', 'green')
 
