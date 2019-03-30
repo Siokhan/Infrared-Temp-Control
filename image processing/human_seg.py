@@ -1,10 +1,7 @@
 import matplotlib.pyplot as plt
 
 from skimage import io
-from skimage import img_as_float
-from skimage import img_as_ubyte
-from skimage import img_as_uint
-from skimage import img_as_int
+from skimage import exposure
 from skimage.color import rgb2hed
 from matplotlib.colors import LinearSegmentedColormap
 
@@ -26,8 +23,11 @@ def color_seperation(image_path, colour1, colour2):
     #having issues, come back to this at the end
     #io.imsave('./images/' + image_path[9:17] + '_seg.jpg', final_seg)
 
-    return human_seperation
-    return final_seg
+    print(final_seg.min(), final_seg.max())  
+    return human_seperation, final_seg
+
+def infra_histogram(image):
+    
 
 atlantis_seg = color_seperation('./images/atlantis.jpg', 'white', 'green')
 
