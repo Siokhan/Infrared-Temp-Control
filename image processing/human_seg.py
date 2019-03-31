@@ -27,9 +27,19 @@ def color_seperation(image_path, colour1, colour2):
     return human_seperation, final_seg
 
 def infra_histogram(image):
-    
+   fig, rgb_histo = plt.subplots(nrows=3, ncols=1, figsize=(5, 8)) 
+
+   for c, c_color in enumerate(('red', 'green', 'blue')):
+    img_hist, bins = exposure.histogram(image[..., c])
+    rgb_histo[c].plot(bins, img_hist / img_hist.max())
+    img_cdf, bins = exposure.cumulative_distribution(image[..., c])
+    rgb_histo[c].plot(bins, img_cdf)
+    rgb_histo[c].set_ylabel(c_color)
+
+    return rgb_histo
 
 atlantis_seg = color_seperation('./images/atlantis.jpg', 'white', 'green')
+
 
 plt.show()
 

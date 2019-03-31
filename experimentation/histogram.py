@@ -15,22 +15,18 @@ for aa in (ax1, ax2, ax3):
 
 ax1.imshow(image)
 ax1.set_title('Source')
-ax2.imshow(reference)
-ax2.set_title('Reference')
 
-fig, axes = plt.subplots(nrows=3, ncols=3, figsize=(8, 8))
+fig, axes = plt.subplots(nrows=3, ncols=1, figsize=(5, 8))
 
 
-for i, img in enumerate((image, reference)):
-    for c, c_color in enumerate(('red', 'green', 'blue')):
-        img_hist, bins = exposure.histogram(img[..., c])
-        axes[c, i].plot(bins, img_hist / img_hist.max())
-        img_cdf, bins = exposure.cumulative_distribution(img[..., c])
-        axes[c, i].plot(bins, img_cdf)
-        axes[c, 0].set_ylabel(c_color)
+for c, c_color in enumerate(('red', 'green', 'blue')):
+    img_hist, bins = exposure.histogram(image[..., c])
+    axes[c].plot(bins, img_hist / img_hist.max())
+    img_cdf, bins = exposure.cumulative_distribution(image[..., c])
+    axes[c].plot(bins, img_cdf)
+    axes[c].set_ylabel(c_color)
 
-axes[0, 0].set_title('Source')
-axes[0, 1].set_title('Reference')
+axes[0].set_title('Source')
 
 plt.tight_layout()
 plt.show()
