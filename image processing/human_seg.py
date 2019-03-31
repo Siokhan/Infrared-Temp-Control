@@ -38,8 +38,8 @@ def infra_histogram(image):
 
     return rgb_histo
 
-atlantis_seg = color_seperation('./images/atlantis.jpg', 'white', 'green')
-
+image_seg = color_seperation('./images/atlantis.jpg', 'white', 'green')
+#image_histo = infra_histogram(final_seg)
 
 plt.show()
 
