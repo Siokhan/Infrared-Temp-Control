@@ -17,7 +17,7 @@ from skimage.color.adapt_rgb import adapt_rgb, each_channel, hsv_value
 from scipy import ndimage as ndi
 from matplotlib.colors import LinearSegmentedColormap
 
-atlantis = io.imread('./images/atlantis.jpg')
+atlantis = io.imread('./images/test/atlantis.jpg')
 histo = np.histogram(atlantis, bins=np.arange(0,256))
 
 fig, atlantisHisto = plt.subplots(figsize=(4, 3))

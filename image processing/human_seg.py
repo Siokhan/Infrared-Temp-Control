@@ -54,7 +54,6 @@ def infra_histogram(image):
 
     return rgb_histo
 
-image_seg = segment_histo('./images/atlantis.jpg', 'white', 'green')
+image_seg = segment_histo('./images/test/atlantis.jpg', 'white', 'green')
 
 plt.show()
-
