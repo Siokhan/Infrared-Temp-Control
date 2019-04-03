@@ -26,6 +26,7 @@ def segment_histo(image_path, colour1, colour2):
 
     fig, rgb_histo = plt.subplots(nrows=3, ncols=1, figsize=(5, 8)) 
 
+    #plotting the histogram and cummulative histogram across each colour channel
     for c, c_color in enumerate(('red', 'green', 'blue')):
         img_hist, bins = exposure.histogram(final_seg_rgb[..., c])
         rgb_histo[c].plot(bins, img_hist / img_hist.max())
@@ -33,13 +34,13 @@ def segment_histo(image_path, colour1, colour2):
         rgb_histo[c].plot(bins, img_cdf)
         rgb_histo[c].set_ylabel(c_color) 
 
-    rgb_histo[0].set_title('Histogram of RGB channels')
+    rgb_histo[0].set_title('Histogram of RGB channels (original image)')
 
     #attempt at saving the image onto machine, not crucial
     #massive precision loss look into conservation
     io.imsave('./images/' + image_path[9:17] + '_seg.jpg', final_seg_rgb)
     
-    print(final_seg_rgb.min(), final_seg_rgb.max())  
+    print(final_seg.min(), final_seg.max())  
     return human_seperation, final_seg, rgb_histo
 
 def infra_histogram(image):
@@ -54,6 +55,6 @@ def infra_histogram(image):
 
     return rgb_histo
 
-image_seg = segment_histo('./images/test/atlantis.jpg', 'white', 'green')
+image_seg = segment_histo('./images/hot/alexrainbow.jpg', 'white', 'green')
 
 plt.show()
