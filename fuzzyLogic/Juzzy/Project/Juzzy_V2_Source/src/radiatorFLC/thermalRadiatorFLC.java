@@ -68,7 +68,7 @@ public class thermalRadiatorFLC
         radiatorPower.setDiscretisationLevel(50);        
         
         //get some outputs
-        getTemp(10);
+        getTemp(6.4);
         
         //plot some sets, discretizing each input into 100 steps.
         plotMFs("Heating Level Membership Functions", new T1MF_Interface[]{coldTempMF, normalTempMF, hotTempMF}, temperature.getDomain(), 100);

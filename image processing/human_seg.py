@@ -15,6 +15,11 @@ def segment_histo(image_path, colour1, colour2):
     cmap_custom = LinearSegmentedColormap.from_list('mycmap', [colour1, colour2])
     final_seg = image_hed[:, :, 0]
 
+    fig, image_original = plt.subplots(figsize=(4, 3))
+    image_original.imshow(image)
+    image_original.set_title('Original Image')
+    image_original.axis('off')
+
     fig, human_seperation = plt.subplots(figsize=(4, 3))
     human_seperation.imshow(final_seg, cmap=cmap_custom)
     human_seperation.set_title('colour deconvolution')
@@ -28,9 +33,9 @@ def segment_histo(image_path, colour1, colour2):
 
     #plotting the histogram and cummulative histogram across each colour channel
     for c, c_color in enumerate(('red', 'green', 'blue')):
-        img_hist, bins = exposure.histogram(final_seg_rgb[..., c])
+        img_hist, bins = exposure.histogram(image[..., c])
         rgb_histo[c].plot(bins, img_hist / img_hist.max())
-        img_cdf, bins = exposure.cumulative_distribution(final_seg_rgb[..., c])
+        img_cdf, bins = exposure.cumulative_distribution(image[..., c])
         rgb_histo[c].plot(bins, img_cdf)
         rgb_histo[c].set_ylabel(c_color) 
 
@@ -40,7 +45,8 @@ def segment_histo(image_path, colour1, colour2):
     #massive precision loss look into conservation
     io.imsave('./images/' + image_path[9:17] + '_seg.jpg', final_seg_rgb)
     
-    print(final_seg.min(), final_seg.max())  
+    print(image.min(), image.max())  
+    print(image.mean())
     return human_seperation, final_seg, rgb_histo
 
 def infra_histogram(image):
@@ -55,6 +61,6 @@ def infra_histogram(image):
 
     return rgb_histo
 
-image_seg = segment_histo('./images/hot/alexrainbow.jpg', 'white', 'green')
+image_seg = segment_histo('./images/hot/siorainbow.jpg', 'white', 'green')
 
 plt.show()
