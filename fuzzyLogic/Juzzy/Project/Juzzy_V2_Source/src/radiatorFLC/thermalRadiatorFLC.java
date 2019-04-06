@@ -1,9 +1,8 @@
 /*
  * thermalRadiatorFLC.java
  *
- * Created on May 20th 2012
+ * Created on March 2019
  *
- * Copyright 2012 Christian Wagner All Rights Reserved.
  */
 package radiatorFLC;
 
