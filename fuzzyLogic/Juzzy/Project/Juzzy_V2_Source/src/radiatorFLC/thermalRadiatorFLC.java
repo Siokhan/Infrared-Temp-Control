@@ -18,7 +18,6 @@ import type1.system.T1_Antecedent;
 import type1.system.T1_Consequent;
 import type1.system.T1_Rule;
 import type1.system.T1_Rulebase;
-import java.io.File;
 import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -35,14 +34,14 @@ import java.io.IOException;
 public class thermalRadiatorFLC 
 {
     Input temperature;    //the inputs to the FLS
-    Output radiatorPower;             //the output of the FLS
+    Output radiatorPower;   //the output of the FLS
     T1_Rulebase rulebase;   //the rulebase captures the entire FLS
     
     public thermalRadiatorFLC() throws IOException
     {
         //Define the inputs
         temperature = new Input("Temperature Feeling", new Tuple(0,10));      //heating level detected from thermal image
-        radiatorPower = new Output("Radiator Power Output", new Tuple(0,100));               //a percentage for the radiatorPower
+        radiatorPower = new Output("Radiator Power Output", new Tuple(0,100)); //a percentage for the radiatorPower
 
         //Set up the membership functions (MFs) for each input and output
         T1MF_Gauangle coldTempMF = new T1MF_Gauangle("MF for cold temperature",0.0, 0.0, 6.0);
@@ -72,8 +71,9 @@ public class thermalRadiatorFLC
         //just an example of setting the discretisation level of an output - the usual level is 100
         radiatorPower.setDiscretisationLevel(50);        
         
-        //get some outputs
-        
+        //get some outputs using readInput function
+        //string is then converted to double in order to appropriately
+        //calculate radiator power output
         String [] heatLvlTxt = readInput("/Users/siokhankouassi/Desktop/Dissertation-2/fuzzyLogic/Juzzy/Project/Juzzy_V2_Source/src/radiatorFLC/FLCinput.txt");
         double finalInput = Double.parseDouble(heatLvlTxt[0]);
         System.out.println(finalInput);
