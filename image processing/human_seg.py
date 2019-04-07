@@ -80,7 +80,7 @@ def segment_histo(image_path, colour1, colour2):
 
     rgb_histo[0].set_title('Histogram of RGB channels (original image)')
 
-    #attempt at saving the image onto machine, not crucial
+    #saving the image onto machine, not crucial
     #massive precision loss look into conservation
     io.imsave('./images/' + image_path[9:17] + '_seg.jpg', final_seg_rgb)
     
@@ -106,7 +106,7 @@ def segment_histo(image_path, colour1, colour2):
     return human_seperation, final_seg, rgb_histo
 
 #excuting main function with detected image
-image_seg = segment_histo('./images/hot/siorainbow.jpg', 'white', 'green')
+image_seg = segment_histo('./images/cold/johnrainbow.jpg', 'white', 'green')
 
 #show relevant figures onto the screen
 plt.show()
