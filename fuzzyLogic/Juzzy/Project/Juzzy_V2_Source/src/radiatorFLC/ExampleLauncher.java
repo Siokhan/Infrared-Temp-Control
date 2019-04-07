@@ -7,13 +7,15 @@
  */
 package radiatorFLC;
 
+import java.io.IOException;
+
 /**
  *
  * @author Christian Wagner
  */
 public class ExampleLauncher 
 {
-    public static void main(String args[])
+    public static void main(String args[]) throws IOException
     {
         String s = (
                 "Use the following parameters to launch one of the examples:\n"
