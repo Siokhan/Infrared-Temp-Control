@@ -85,11 +85,18 @@ def segment_histo(image_path, colour1, colour2):
     io.imsave('./images/' + image_path[9:17] + '_seg.jpg', final_seg_rgb)
     
     #derive heat level based on thermaml image, this will be the FLC input
-    controller_input = flc_input(image.mean())
-
-    print(image.min(), image.max())  
-    print(image.mean())
-    print(controller_input)
+    #this is happens only when human is detected, else the radiator power %
+    #is set to 0
+    human_threshold = -0.5681
+    if final_seg.max() > human_threshold:
+        controller_input = flc_input(image.mean())
+        print(controller_input)
+    else:
+        controller_input = 10
+        print(controller_input)
+        print('NO HUMAN DETECTED IN ROOM \nHEATING DEACTIVATED')
+        exit()
+        
     return human_seperation, final_seg, rgb_histo
 
 #excuting main function with detected image
