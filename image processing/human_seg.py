@@ -96,6 +96,9 @@ def segment_histo(image_path, colour1, colour2):
         print(controller_input)
     else:
         controller_input = 10
+        flc_input_file = open('../fuzzyLogic/Juzzy/Project/Juzzy_V2_Source/src/radiatorFLC/FLCinput.txt', 'w+')
+        flc_input_file.write(str(controller_input))
+        flc_input_file.close()
         print(controller_input)
         print('NO HUMAN DETECTED IN ROOM \nHEATING DEACTIVATED')
         exit()
@@ -103,7 +106,7 @@ def segment_histo(image_path, colour1, colour2):
     return human_seperation, final_seg, rgb_histo
 
 #excuting main function with detected image
-image_seg = segment_histo('./images/hot/alexrainbow.jpg', 'white', 'green')
+image_seg = segment_histo('./images/cold/emptyrainbow.jpg', 'white', 'green')
 
 #show relevant figures onto the screen
 plt.show()
