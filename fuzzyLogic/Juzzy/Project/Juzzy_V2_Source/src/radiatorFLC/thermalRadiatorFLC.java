@@ -71,6 +71,9 @@ public class thermalRadiatorFLC
         radiatorPower.setDiscretisationLevel(50);        
         
         //get some outputs
+        
+        readInput("FLCinput.txt");
+        
         getTemp(10);
         
         //plot some sets, discretizing each input into 100 steps.
@@ -105,6 +108,25 @@ public class thermalRadiatorFLC
             plotter.plotMF(sets[i].getName(), sets[i], discretizationLevel, xAxisRange, new Tuple(0.0,1.0), false);
         }
         plotter.show(name);
+    }
+    
+    private static String readInput(String file)
+    {
+        String text = "";
+        try
+        {
+            Scanner s = new Scanner(new File(file));
+            while(s.hasNextInt())
+            {
+               text = text + s.next() + " ";
+               System.out.println(text);
+            }
+        }
+        catch(FileNotFoundException e)
+        {
+            System.out.println("file not found");
+        }
+        return text;
     }
     
     public static void main (String args[])
