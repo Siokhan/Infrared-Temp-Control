@@ -23,8 +23,8 @@ def infra_histogram(image):
 #FLC input function, returns value between 0 and 10 based on "heating level felt"
 #takes mean of rgb numpy array of an image as input
 def flc_input(mean):
-    old_max = 134.83
-    old_min = 132.61
+    old_max = 141
+    old_min = 129
     #if mean falls outside of the min and max bounds, mean is set to old_min if below
     #old_min, mean is set to old_max if higher than old_max
     detected_mean = mean
@@ -82,12 +82,16 @@ def segment_histo(image_path, colour1, colour2):
     #massive precision loss look into conservation
     io.imsave('./images/' + image_path[9:17] + '_seg.jpg', final_seg_rgb)
     
+    #derive heat level based on thermaml image, this will be the FLC input
+    controller_input = flc_input(image.mean())
+
     print(image.min(), image.max())  
     print(image.mean())
+    print(controller_input)
     return human_seperation, final_seg, rgb_histo
 
 #excuting main function with detected image
-image_seg = segment_histo('./images/hot/alexrainbow.jpg', 'white', 'green')
+image_seg = segment_histo('./images/cold/siorainbow.jpg', 'white', 'green')
 
 #show relevant figures onto the screen
 plt.show()
