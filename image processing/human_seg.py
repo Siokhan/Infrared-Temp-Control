@@ -6,8 +6,45 @@ from skimage.color import rgb2hed
 from skimage.color import hed2rgb
 from matplotlib.colors import LinearSegmentedColormap
 
+##   functions used to analyse and break down thermal image   ##
+#Histogram function
+def infra_histogram(image):
+   fig, rgb_histo = plt.subplots(nrows=3, ncols=1, figsize=(5, 8)) 
+
+   for c, c_color in enumerate(('red', 'green', 'blue')):
+    img_hist, bins = exposure.histogram(image[..., c])
+    rgb_histo[c].plot(bins, img_hist / img_hist.max())
+    img_cdf, bins = exposure.cumulative_distribution(image[..., c])
+    rgb_histo[c].plot(bins, img_cdf)
+    rgb_histo[c].set_ylabel(c_color)
+
+    return rgb_histo
+
+#FLC input function, returns value between 0 and 10 based on "heating level felt"
+#takes mean of rgb numpy array of an image as input
+def flc_input(mean):
+    old_max = 134.83
+    old_min = 132.61
+    #if mean falls outside of the min and max bounds, mean is set to old_min if below
+    #old_min, mean is set to old_max if higher than old_max
+    detected_mean = mean
+    if detected_mean < old_min:
+        detected_mean = old_min
+    elif detected_mean > old_max:
+        detected_mean = old_max
+    else:
+        detected_mean = mean
+    
+    new_max = 10
+    new_min = 0
+    old_range = (old_max - old_min)
+    new_range = (new_max - new_min)
+    #Heat level derived based on detected mean, returns value between 0 and 10
+    heat_level = (((detected_mean - old_min) * new_range) / old_range) + new_min
+    return heat_level
+
 #Seperating human from the rest of the image using IHC colour deconvolution
-#This function accomplishes what is described above on specified image
+#This function accomplishes what is described above on specified image (main function)
 def segment_histo(image_path, colour1, colour2):
     image = io.imread(image_path)
     image_hed = rgb2hed(image)
@@ -49,18 +86,8 @@ def segment_histo(image_path, colour1, colour2):
     print(image.mean())
     return human_seperation, final_seg, rgb_histo
 
-def infra_histogram(image):
-   fig, rgb_histo = plt.subplots(nrows=3, ncols=1, figsize=(5, 8)) 
+#excuting main function with detected image
+image_seg = segment_histo('./images/hot/alexrainbow.jpg', 'white', 'green')
 
-   for c, c_color in enumerate(('red', 'green', 'blue')):
-    img_hist, bins = exposure.histogram(image[..., c])
-    rgb_histo[c].plot(bins, img_hist / img_hist.max())
-    img_cdf, bins = exposure.cumulative_distribution(image[..., c])
-    rgb_histo[c].plot(bins, img_cdf)
-    rgb_histo[c].set_ylabel(c_color)
-
-    return rgb_histo
-
-image_seg = segment_histo('./images/hot/siorainbow.jpg', 'white', 'green')
-
+#show relevant figures onto the screen
 plt.show()
